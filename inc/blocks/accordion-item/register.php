@@ -1,5 +1,5 @@
 <?php
-if ( !defined('ABSPATH') ) {
+if (!defined('ABSPATH')) {
   exit;
 }
 
@@ -26,5 +26,5 @@ acf_register_block_type([
     'jsx'           => true,
     'multiple'      => true
   ),
-  'render_template'   => get_template_directory() .'/inc/blocks/accordion-item/template.php'
+  'render_template'   => get_template_directory() . '/inc/blocks/accordion-item/template.php'
 ]);

@@ -1,5 +1,5 @@
 <?php
-if ( !defined('ABSPATH') ) {
+if (!defined('ABSPATH')) {
   exit;
 }
 
@@ -8,7 +8,7 @@ if ( !defined('ABSPATH') ) {
  *
  * @method gioia_theme_breadcrumb
  */
-if ( !function_exists('gioia_theme_breadcrumb') ) {
+if (!function_exists('gioia_theme_breadcrumb')) {
   function gioia_theme_breadcrumb() {
     yoast_breadcrumb('<ol class="breadcrumb"><li class="breadcrumb__item">', '</li></ol>');
   }

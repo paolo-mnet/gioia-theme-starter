@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The template for displaying 404 pages (not found).
  *
@@ -15,7 +16,7 @@ get_header();
     <div class="not-found__desc">
       <p><?php _e('It seems you are lost.', 'gioia'); ?></p>
       <div class="wp-block-button">
-        <a href="<?= esc_url( home_url('/') ); ?>" class="wp-block-button__link"><?php _e('Back to home', 'gioia'); ?></a>
+        <a href="<?= esc_url(home_url('/')); ?>" class="wp-block-button__link"><?php _e('Back to home', 'gioia'); ?></a>
       </div>
     </div>
   </div>

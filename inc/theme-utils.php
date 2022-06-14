@@ -1,9 +1,9 @@
 <?php
-if ( !defined('ABSPATH') ) {
+if (!defined('ABSPATH')) {
   exit;
 }
 
-if ( !class_exists('ThemeUtils') ) {
+if (!class_exists('ThemeUtils')) {
   class ThemeUtils {
 
     public static $dark_brightness = -0.208;
@@ -63,10 +63,10 @@ if ( !class_exists('ThemeUtils') ) {
      */
     public static function get_color_scheme() {
       $color_scheme = array();
-      $file_path = get_template_directory() .'/theme.json';
+      $file_path = get_template_directory() . '/theme.json';
       $file_data = wp_json_file_decode($file_path, ['associative' => true]);
-      if ( is_array($file_data) && isset($file_data['settings']['color']['palette']) ) {
-        foreach($file_data['settings']['color']['palette'] as $color) {
+      if (is_array($file_data) && isset($file_data['settings']['color']['palette'])) {
+        foreach ($file_data['settings']['color']['palette'] as $color) {
           $color_scheme[$color['slug']] = array(
             'color' => $color['color'],
             'label' => $color['name']
@@ -89,12 +89,12 @@ if ( !class_exists('ThemeUtils') ) {
         $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
       }
       $hex = array_map('hexdec', str_split($hex, 2));
-      foreach ($hex as & $color) {
+      foreach ($hex as &$color) {
         $adjustable_limit = $percent < 0 ? $color : 255 - $color;
         $adjust_amount = ceil($adjustable_limit * $percent);
         $color = str_pad(dechex($color + $adjust_amount), 2, '0', STR_PAD_LEFT);
       }
-      return '#'.implode($hex);
+      return '#' . implode($hex);
     }
 
     /**
@@ -168,7 +168,7 @@ if ( !class_exists('ThemeUtils') ) {
         box-shadow: 0 0 0 1px $btn_light_color;
       }
       input[type=checkbox]:checked::before {
-        content: url('data:image/svg+xml;base64,". base64_encode('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M14.83 4.89l1.34.94-5.81 8.38H9.02L5.78 9.67l1.34-1.25 2.57 2.4z" fill="'.$btn_color.'" /></svg>') ."');
+        content: url('data:image/svg+xml;base64," . base64_encode('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M14.83 4.89l1.34.94-5.81 8.38H9.02L5.78 9.67l1.34-1.25 2.57 2.4z" fill="' . $btn_color . '" /></svg>') . "');
       }";
       if ($logo_id) {
         $logo_url = wp_get_attachment_url($logo_id);
@@ -192,20 +192,20 @@ if ( !class_exists('ThemeUtils') ) {
     public static function create_theme_styles() {
       $theme_styles = '';
       $variable_colors = ['primary', 'secondary', 'alt'];
-      $partials_dir = get_stylesheet_directory() .'/assets/css/partials';
-      $partials = array_diff( scandir($partials_dir), ['.', '..'] );
+      $partials_dir = get_stylesheet_directory() . '/assets/css/partials';
+      $partials = array_diff(scandir($partials_dir), ['.', '..']);
       // TODO: reorder files (?)
-      foreach($partials as $file) {
+      foreach ($partials as $file) {
         $partial_css = file_get_contents("{$partials_dir}/{$file}");
         $theme_styles .= preg_replace(
-          ['/\s*(\w)\s*{\s*/','/\s*(\S*:)(\s*)([^;]*)(\s|\n)*;(\n|\s)*/','/\n/','/\s*}\s*/'],
-          ['$1{ ','$1$3;',"",'} '],
+          ['/\s*(\w)\s*{\s*/', '/\s*(\S*:)(\s*)([^;]*)(\s|\n)*;(\n|\s)*/', '/\n/', '/\s*}\s*/'],
+          ['$1{ ', '$1$3;', "", '} '],
           $partial_css
         );
       }
       $theme_styles .= 'body{';
-      foreach(self::get_color_scheme() as $name => $value) {
-        if ( in_array($name, $variable_colors) ) {
+      foreach (self::get_color_scheme() as $name => $value) {
+        if (in_array($name, $variable_colors)) {
           $color_dark = self::get_color_brightness($value['color'], self::$dark_brightness);
           $color_light = self::get_color_brightness($value['color'], self::$light_brightness);
           $theme_styles .= "--wp--preset--color--{$name}-dark: $color_dark;";
@@ -224,12 +224,12 @@ if ( !class_exists('ThemeUtils') ) {
      * @return string $video_image [preview image URL].
      */
     public static function create_video_preview($video_url, $poster_id = 0) {
-      if ( strpos($video_url, '.mp4') !== false && $poster_id ) {
+      if (strpos($video_url, '.mp4') !== false && $poster_id) {
         $video_image = wp_get_attachment_image_url($poster_id, 'large');
-      } else if( strpos($video_url, 'vimeo') !== false ) {
+      } else if (strpos($video_url, 'vimeo') !== false) {
         preg_match('%^https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)(?:[?]?.*)$%im', $video_url, $matches);
         $video_image = "https://vumbnail.com/{$matches[3]}_large.jpg";
-      } else if( strpos($video_url, 'youtu') !== false ) {
+      } else if (strpos($video_url, 'youtu') !== false) {
         preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $video_url, $matches);
         $video_image = "https://img.youtube.com/vi/{$matches[1]}/hqdefault.jpg";
       }
@@ -259,9 +259,9 @@ if ( !class_exists('ThemeUtils') ) {
      */
     public static function create_social_networks() {
       $social_urls = array();
-      foreach(self::get_social() as $key => $name) {
+      foreach (self::get_social() as $key => $name) {
         // TODO: how to set options
-        if ( $url = get_theme_mod($key, false) ) {
+        if ($url = get_theme_mod($key, false)) {
           $social_urls[$key] = array(
             'url'  => $url,
             'name' => $name
@@ -281,9 +281,9 @@ if ( !class_exists('ThemeUtils') ) {
       $svg   = '';
       $name  = strtolower($name);
       $icons = self::get_icons();
-      if ( in_array($name, array_keys($icons)) ) {
-        $svg .= '<svg class="icon icon-'.$name.'" xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" aria-hidden="true">';
-        switch($name) {
+      if (in_array($name, array_keys($icons))) {
+        $svg .= '<svg class="icon icon-' . $name . '" xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 24 24" aria-hidden="true">';
+        switch ($name) {
           case 'facebook':
             $svg .= '<path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"/>';
             break;
@@ -361,6 +361,5 @@ if ( !class_exists('ThemeUtils') ) {
       }
       return $svg;
     }
-
   }
 }

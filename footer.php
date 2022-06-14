@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The fallback theme footer.
  *
@@ -8,12 +9,13 @@
  */
 ?>
 
-    <footer class="wp-block-template-part">
-      <?php block_footer_area(); ?>
-    </footer>
-  </div><!-- .wp-site-blocks -->
+<footer class="wp-block-template-part">
+  <?php block_footer_area(); ?>
+</footer>
+</div><!-- .wp-site-blocks -->
 
-  <?php wp_footer(); ?>
+<?php wp_footer(); ?>
 
 </body>
+
 </html>

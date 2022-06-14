@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The template for displaying password protected post by default.
  *
@@ -12,7 +13,7 @@ $post_id = get_the_ID() ?: rand();
 
 <div class="container">
   <div class="post-protected">
-    <form class="wpcf7-form post-protected__form" action="<?= esc_url( site_url('wp-login.php?action=postpass', 'login_post') ); ?>" class="wpcf7-form" method="post">
+    <form class="wpcf7-form post-protected__form" action="<?= esc_url(site_url('wp-login.php?action=postpass', 'login_post')); ?>" class="wpcf7-form" method="post">
       <p><?php _e('This content is password protected. To view it please enter your password below:'); ?></p>
       <div class="wpcf7-form-group">
         <label for="<?= esc_attr("pwbox-{$post_id}") ?>" class="sr-only"><?php _e('Password:'); ?></label>

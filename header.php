@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The fallback theme header.
  *

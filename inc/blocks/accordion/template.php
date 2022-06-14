@@ -11,16 +11,16 @@ defined('ABSPATH') || exit;
  * @param   int    $post_id
  */
 $anchor_id = "accordion-$block[id]";
-if ( !empty($block['anchor']) ) {
+if (!empty($block['anchor'])) {
   $anchor_id = $block['anchor'];
 }
 
 // Set block classes.
 $classes = 'accordion';
-if ( !empty($block['className']) ) {
+if (!empty($block['className'])) {
   $classes .= sprintf(' %s', $block['className']);
 }
-if ( !empty($block['align']) ) {
+if (!empty($block['align'])) {
   $classes .= sprintf(' align%s', $block['align']);
 }
 if ($is_preview) $classes .= ' is-preview';
@@ -35,15 +35,13 @@ $accordion_multiple = get_field('accordion_multiple') ?: false;
 $accordion_desc = get_field('accordion_desc') ?: "Accordion {$anchor_id}";
 ?>
 
-<div id="<?= esc_attr($anchor_id); ?>"
-     class="<?= esc_attr($classes); ?>"
-     aria-label="<?= esc_attr($accordion_desc); ?>"
-     data-multiple="<?= esc_attr($accordion_multiple ? 'true' : 'false'); ?>">
+<div id="<?= esc_attr($anchor_id); ?>" class="<?= esc_attr($classes); ?>" aria-label="<?= esc_attr($accordion_desc); ?>" data-multiple="<?= esc_attr($accordion_multiple ? 'true' : 'false'); ?>">
 
-  <?php if($block['align'] === 'full'): ?><div class="accordion__container"><?php endif; ?>
+  <?php if ($block['align'] === 'full') : ?><div class="accordion__container"><?php endif; ?>
 
-  <InnerBlocks allowedBlocks="<?= esc_attr($allowed_blocks); ?>" />
+    <InnerBlocks allowedBlocks="<?= esc_attr($allowed_blocks); ?>" />
 
-  <?php if($block['align'] === 'full'): ?></div><?php endif; ?>
+    <?php if ($block['align'] === 'full') : ?>
+    </div><?php endif; ?>
 
 </div>

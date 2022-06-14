@@ -39,4 +39,3 @@ get_template_part('inc/blocks/accordion-item/abstract', null, [
   'preview'  => $is_preview,
   'classes'  => $classes
 ]);
-?>

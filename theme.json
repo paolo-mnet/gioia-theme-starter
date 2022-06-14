@@ -128,18 +128,19 @@
       "wideSize": "1440px"
     },
     "border": {
-      "customRadius": false
+      "radius": true
     },
     "spacing": {
-      "customMargin": true,
-      "customPadding": true,
+      "margin": true,
+      "padding": true,
       "units": ["px", "rem", "%"]
     },
     "custom": {
       "gutter": "15px",
       "spacing": "30px",
-      "button-padding": "8px 24px",
-      "button-border-radius": "2px"
+      "button-border-radius": "2px",
+      "button-padding-vertical": "8px",
+      "button-padding-horizontal": "24px"
     }
   },
   "styles": {
@@ -220,7 +221,12 @@
           "radius": "var(--wp--custom--button-border-radius)"
         },
         "spacing": {
-          "padding": "var(--wp--custom--button-padding)"
+          "padding": {
+            "top": "var(--wp--custom--button-padding-vertical)",
+            "left": "var(--wp--custom--button-padding-horizontal)",
+            "right": "var(--wp--custom--button-padding-horizontal)",
+            "bottom": "var(--wp--custom--button-padding-vertical)"
+          }
         }
       }
     }
