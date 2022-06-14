@@ -1,0 +1,47 @@
+/* ! Typography */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
+a {
+  text-decoration: underline;
+}
+a:hover, a:focus {
+  color: var(--wp--preset--color--primary-light);
+}
+a:active:focus {
+  color: var(--wp--preset--color--primary-dark);
+}
+a[href^="tel:"] {
+  color: inherit;
+}
+@media (hover: hover) {
+  a[href^="tel:"] {
+    cursor: text;
+    pointer-events: none;
+  }
+  a {
+    text-underline-offset: 1px;
+    text-decoration-color: rgba(233,78,28,0);
+  }
+  a:hover, a:focus {
+    text-decoration-color: var(--wp--preset--color--primary-light);
+  }
+  a:active:focus {
+    text-decoration-color:var(--wp--preset--color--primary-dark);
+  }
+  a:not([class]):not([role="button"]) {
+    transition: color 0.2s ease,
+                text-decoration-color 0.2s ease;
+  }
+}
+a, button, input[type="submit"] {
+  outline: 0 !important;
+}
+b, strong {
+  font-weight: 700;
+}
+ol, ul {
+  padding-left: 20px;
+}
