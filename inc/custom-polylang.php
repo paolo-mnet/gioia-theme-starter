@@ -10,7 +10,6 @@ if (!defined('ABSPATH')) {
  */
 if (!function_exists('gioia_languages')) {
   function gioia_languages($echo = true) {
-    $curr_lang = pll_current_language('slug');
     ob_start();
 ?>
     <div class="pll-selector">

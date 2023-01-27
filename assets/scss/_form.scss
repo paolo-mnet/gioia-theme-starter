@@ -1,0 +1,70 @@
+/* ! Form */
+::-moz-placeholder {
+  opacity: 1;
+  color: rgba(35, 35, 35, 0.4);
+}
+:-ms-input-placeholder {
+  color: rgba(35, 35, 35, 0.4);
+}
+::-webkit-input-placeholder {
+  color: rgba(35, 35, 35, 0.4);
+}
+input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=image]):not([type=file]),
+select,
+textarea {
+  color: inherit;
+  padding: 6px 12px;
+  font-size: inherit;
+  border-radius: 0px;
+  border: 1px solid $border-color;
+  background-color: $white-color;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  &:focus {
+    outline: 0;
+    border-color: $text-color;
+    box-shadow: 0 0 0 0.15rem rgba(35, 35, 35, 0.05);
+  }
+  .required & {
+    border-color: currentColor;
+  }
+}
+input:not([type=radio]):not([type=checkbox]):not([type=submit]):not([type=image]):not([type=file]) {
+  width: 100%;
+  height: 42px;
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  appearance: none;
+}
+input[type=search]::-ms-clear,
+input[type=search]::-ms-reveal {
+  width: 0;
+  height: 0;
+  display: none;
+}
+select {
+  width: 100%;
+  height: 42px;
+  cursor: pointer;
+  padding-right: 32px;
+  appearance: none;
+  background-size: 16px auto;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 8px) 50%;
+  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iY3VycmVudENvbG9yIiBjbGFzcz0iYmkgYmktY2hldnJvbi1kb3duIiB2aWV3Qm94PSIwIDAgMTYgMTYiPgogIDxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgZD0iTTEuNjQ2IDQuNjQ2YS41LjUgMCAwIDEgLjcwOCAwTDggMTAuMjkzbDUuNjQ2LTUuNjQ3YS41LjUgMCAwIDEgLjcwOC43MDhsLTYgNmEuNS41IDAgMCAxLS43MDggMGwtNi02YS41LjUgMCAwIDEgMC0uNzA4eiIvPgo8L3N2Zz4=');
+}
+select::-ms-expand {
+  display: none;
+}
+textarea {
+  width: 100%;
+  height: auto;
+}
+label,
+legend {
+  display: block;
+  font-weight: 500;
+  font-size: inherit;
+}

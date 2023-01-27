@@ -46,7 +46,7 @@ function gioia_register_block_styles() {
   register_block_style('core/list', [
     'is_default'   => false,
     'name'         => 'two-columns',
-    'label'        => _x('Two Columns', 'Block Editor', 'energica')
+    'label'        => _x('Two columns', 'Block Editor', 'gioia')
   ]);
 }
 add_action('init', 'gioia_register_block_styles', 11);
@@ -94,25 +94,34 @@ function gioia_block_photoswipe_assets() {
 add_action('wp_enqueue_scripts', 'gioia_block_photoswipe_assets', 9);
 
 /**
- * Filter block(s) output to handle exceptions.
+ * Filter the block(s) output.
  *
  * @param  string $output
  * @param  array  $block
  * @return string $output
  */
 function gioia_render_block($output, $block) {
-  if ($block['blockName'] === 'core/gallery') {
-    $output = str_replace('<ul class="blocks-gallery-grid">', '<ul class="blocks-gallery-grid" itemscope itemtype="http://schema.org/ImageGallery" data-gallery>', $output);
-    $output = str_replace('<figure>', '<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" role="listitem">', $output);
-    preg_match_all('/<img(?=.*?data-full-url="(.*?)")[^>]*?>/i', $output, $matches);
-    foreach ($matches[0] as $i => $image) {
-      $image_url = $matches[1][$i];
-      $image_id = attachment_url_to_postid($image_url);
-      $image_meta = wp_get_attachment_metadata($image_id);
-      $image_full_size = array($image_meta['width'], $image_meta['height']);
-      $output = str_replace($image, "<a href=\"{$image_url}\" itemprop=\"contentUrl\" data-size=\"" . implode('x', $image_full_size) . "\">{$image}</a>", $output);
-    }
-    $output = str_replace('<img', '<img itemprop="thumbnail"', $output);
+  switch ($block['blockName']) {
+    case 'core/button':
+      if (isset($block['attrs']['icon']) && ($icon = $block['attrs']['icon'])) {
+        $icon_svg = gioia_icon($icon);
+        $icon_pos = $block['attrs']['icon_pos'] ?? 'left';
+        $output = preg_replace('/<a (.*?)>(.*?)<\/a>/', '<a $1>' . ($icon_pos == 'right' ? '<span>$2</span>' . $icon_svg : $icon_svg . '<span>$2</span>') . '</a>', $output);
+      }
+      break;
+    case 'core/gallery':
+      $output = str_replace('<ul class="blocks-gallery-grid">', '<ul class="blocks-gallery-grid" itemscope itemtype="http://schema.org/ImageGallery" data-gallery>', $output);
+      $output = str_replace('<figure>', '<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" role="listitem">', $output);
+      preg_match_all('/<img(?=.*?data-full-url="(.*?)")[^>]*?>/i', $output, $matches);
+      foreach ($matches[0] as $i => $image) {
+        $image_url = $matches[1][$i];
+        $image_id = attachment_url_to_postid($image_url);
+        $image_meta = wp_get_attachment_metadata($image_id);
+        $image_full_size = array($image_meta['width'], $image_meta['height']);
+        $output = str_replace($image, "<a href=\"{$image_url}\" itemprop=\"contentUrl\" data-size=\"" . implode('x', $image_full_size) . "\">{$image}</a>", $output);
+      }
+      $output = str_replace('<img', '<img itemprop="thumbnail"', $output);
+      break;
   }
   return $output;
 }

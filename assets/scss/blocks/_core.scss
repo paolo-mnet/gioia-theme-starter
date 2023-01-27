@@ -1,0 +1,125 @@
+/* ! Miscellaneous */
+.strong-title {
+  font-weight: $font-heavy;
+  text-transform: uppercase;
+}
+.list-unstyled {
+  &,
+  & ul,
+  & ol {
+    list-style: none;
+  }
+  padding-left: 0;
+}
+.is-style-two-columns {
+  column-count: 2;
+  column-gap: calc($gutter * 2);
+}
+
+/* ! Core: Group */
+.wp-block-group {
+  &:not(.alignwide):not(.alignfull) {
+    padding: 0;
+  }
+  .wp-block-buttons {
+    margin-top: 2rem;
+  }
+}
+
+/* ! Core: Button */
+.wp-block-button__link {
+  &,
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+  .icon {
+    &:first-child {
+      margin-right: 0.5rem;
+    }
+    &:last-child {
+      margin-left: 0.5rem;
+    }
+  }
+  span {
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  &.has-background {
+    border-color: transparent !important;
+  }
+  .wp-block-button.is-style-outline > & {
+    border: none;
+    background-color: $white-color !important;
+    padding-block: $button-padding-v;
+    padding-inline: $button-padding-h;
+  }
+  .wp-block-button[class*="is-style-"] > & {
+    filter: brightness(100%);
+    &:hover {
+      filter: brightness(115%);
+    }
+    &:active {
+      filter: brightness(95%);
+    }
+  }
+  @media (hover: hover) {
+    transition: color 0.2s ease, background-color 0.2s ease;
+    .wp-block-button[class*="is-style-"] > & {
+      transition: filter 0.2s ease;
+    }
+  }
+}
+
+/* ! Core: Table */
+.wp-block-table {
+  table {
+    margin: 0;
+  }
+  th,
+  td {
+    border-color: $border-color;
+  }
+  thead th,
+  tfoot td {
+    background-color: $alt-color;
+  }
+}
+
+/* ! Core: Video */
+.wp-block-video {
+  margin: 0;
+  &:not([class*="is-style-"]),
+  &.is-style-16-9 {
+    aspect-ratio: 16/9;
+  }
+  &.is-style-21-9 {
+    aspect-ratio: 21/9;
+  }
+  &.is-style-4-3 {
+    aspect-ratio: 4/3;
+  }
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+/* ! Core: Embed */
+.wp-embed-aspect-16-9 {
+  aspect-ratio: 16/9;
+}
+.wp-embed-aspect-21-9 {
+  aspect-ratio: 21/9;
+}
+.wp-embed-aspect-4-3 {
+  aspect-ratio: 4/3;
+}
+.wp-block-embed__wrapper,
+.wp-block-embed iframe {
+  width: 100%;
+  height: 100%;
+}

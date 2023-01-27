@@ -1,0 +1,104 @@
+// Colors 
+$primary-color: var(--wp--preset--color--primary);
+$primary-dark-color: var(--wp--preset--color--primary-dark);
+$primary-light-color: var(--wp--preset--color--primary-light);
+$secondary-color: var(--wp--preset--color--secondary);
+$secondary-dark-color: var(--wp--preset--color--secondary-dark);
+$secondary-light-color: var(--wp--preset--color--secondary-light);
+$alt-color: var(--wp--preset--color--alt);
+$alt-dark-color: var(--wp--preset--color--alt-dark);
+$alt-light-color: var(--wp--preset--color--alt-light);
+$light-color: var(--wp--preset--color--light);
+$border-color: var(--wp--preset--color--border);
+$text-color: var(--wp--preset--color--black);
+$white-color: var(--wp--preset--color--white);
+
+// Gradients
+$gradient-black: var(--wp--preset--gradient--black);
+$gradient-underlay-black: var(--wp--preset--gradient--underlay-black);
+$gradient-light-white: var(--wp--preset--gradient--light-white);
+
+// Font
+$font-thin: 300;
+$font-medium: 500;
+$font-bold: 600;
+$font-heavy: 700;
+$font-size: var(--wp--preset--font-size--regular);
+$font-size-s: var(--wp--preset--font-size--small);
+$font-size-m: var(--wp--preset--font-size--medium);
+$font-size-l: var(--wp--preset--font-size--large);
+$font-size-xl: var(--wp--preset--font-size--x-large);
+$font-size-ol: var(--wp--preset--font-size--o-large);
+$font-family: var(--wp--preset--font-family--regular);
+$font-family-s: var(--wp--preset--font-family--system);
+$font-family-h: var(--wp--preset--font-family--headings);
+
+// Custom 
+$gutter: var(--wp--custom--gutter);
+$button-radius: var(--wp--custom--button--border-radius);
+$button-padding-v: var(--wp--custom--button--padding-vertical);
+$button-padding-h: var(--wp--custom--button--padding-horizontal);
+
+// Breakpoints 
+$breakpoints: (
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1366px
+);
+$containers: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1470px
+);
+
+// Layout
+@mixin container {
+  margin: 0 auto;
+  padding-inline: $gutter;
+  @each $name,
+  $value in $breakpoints {
+    @if $name !=xxl {
+      @media (min-width: $value) {
+        max-width: map.get($containers, $name);
+      }
+    }
+  }
+}
+@mixin inner-container {
+  width: calc(100vw - var(--scrollbar-width));
+  margin-left: calc(-50vw + 50% + (var(--scrollbar-width)) / 2);
+}
+@mixin flex-row($justify: flex-start, $align: center, $gap: $gutter) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc($gap * 2);
+  align-items: $align;
+  justify-content: $justify;
+}
+@mixin flex-col($grow: 1, $basis: 0, $max-width: inherit) {
+  @if ($grow ==0 and $basis !=0) {
+    flex: 0 0 $basis;
+    max-width: $basis;
+  }
+  @else {
+    flex: $grow 0 $basis;
+    max-width: $max-width;
+  }
+}
+
+// Miscellaneous
+@mixin list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@mixin media-fit($fit: cover, $position: center) {
+  width: 100%;
+  height: 100%;
+  object-fit: $fit;
+  object-position: $center;
+}

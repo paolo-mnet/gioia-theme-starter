@@ -38,10 +38,13 @@ if (!function_exists('gioia_theme_setup')) :
   function gioia_theme_setup() {
     // Add default posts and comments RSS feed links to <head>.
     add_theme_support('automatic-feed-links');
+
     // Enable support for post thumbnails and featured images.
     add_theme_support('post-thumbnails');
+
     // Let WordPress manage the document title to avoid hard-coded <title> tag.
     add_theme_support('title-tag');
+
     // Add support for page excerpt.
     add_post_type_support('page', 'excerpt');
 
@@ -54,12 +57,22 @@ if (!function_exists('gioia_theme_setup')) :
     add_theme_support('editor-styles');
     add_editor_style([
       THEME_GOOGLE_FONTS,
-      'assets/css/partials/_base.css',
-      'assets/css/partials/_typography.css',
-      'assets/css/blocks-editor.css'
+      'assets/css/editor.css'
     ]);
     // Unregister all default patterns.
     remove_theme_support('core-block-patterns');
+
+    /**
+     * Add support for core custom logo.
+     *
+     * @link https://codex.wordpress.org/Theme_Logo
+     */
+    add_theme_support('custom-logo', [
+      'height'      => 200,
+      'width'       => 200,
+      'flex-width'  => true,
+      'flex-height' => true
+    ]);
 
     /**
      * Add and enable custom image sizes.
@@ -96,8 +109,8 @@ add_action('after_setup_theme', 'gioia_theme_setup');
 function gioia_scripts() {
   // Stylesheets
   wp_enqueue_style('google-fonts', THEME_GOOGLE_FONTS, [], null, 'all');
-  wp_enqueue_style('bootstrap-reboot', get_template_directory_uri() . '/assets/css/bootstrap-reboot.min.css', [], '4.6.1', 'all');
-  wp_enqueue_style('gioia-blocks', get_template_directory_uri() . '/assets/css/blocks-theme.css', ['gioia-theme'], THEME_VERSION);
+  wp_enqueue_style('bootstrap-reboot', get_template_directory_uri() . '/assets/css/reboot.min.css', [], '4.6.1', 'all');
+  wp_enqueue_style('gioia-blocks', get_template_directory_uri() . '/assets/css/blocks.css', ['gioia-theme'], THEME_VERSION);
   wp_register_style('gioia-theme', get_template_directory_uri() . '/assets/css/main.css', [], THEME_VERSION, 'all');
   wp_add_inline_style('gioia-theme', ThemeUtils::create_theme_styles());
   wp_enqueue_style('gioia-theme');
@@ -129,10 +142,14 @@ add_action('wp_enqueue_scripts', 'gioia_scripts');
  * @link https://developer.wordpress.org/reference/hooks/enqueue_block_assets/
  */
 function gioia_block_editor_assets() {
-  wp_enqueue_style('gioia-blocks', get_template_directory_uri() . '/assets/css/blocks-theme.css', ['wp-edit-blocks'], THEME_VERSION);
-  wp_enqueue_script('gioia-editor', get_template_directory_uri() . '/assets/js/blocks-editor.js', ['wp-blocks', 'wp-dom-ready', 'wp-edit-post'], THEME_VERSION);
+  // Stylesheets
+  wp_enqueue_style('gioia-blocks', get_template_directory_uri() . '/assets/css/blocks.css', ['wp-edit-blocks'], THEME_VERSION);
+  wp_add_inline_style('gioia-blocks', ThemeUtils::create_theme_styles());
+
+  // Scripts
+  wp_enqueue_script('gioia-editor', get_template_directory_uri() . '/assets/js/blocks-editor.js', ['wp-blocks', 'wp-dom-ready'], THEME_VERSION);
   wp_enqueue_script('gioia-blocks', get_template_directory_uri() . '/assets/js/blocks-theme.js', ['gioia-editor'], THEME_VERSION);
-  wp_localize_script('gioia-blocks', 'gioia_icons', ThemeUtils::create_block_icons());
+  wp_localize_script('gioia-editor', 'gioia_icons', ThemeUtils::create_block_icons());
 }
 add_action('enqueue_block_editor_assets', 'gioia_block_editor_assets', 20);
 
@@ -183,7 +200,7 @@ add_action('wp_head', 'gioia_telephone_format_detection_meta', 11);
  * @return void
  */
 function gioia_theme_color_meta() {
-  $default_color = ThemeUtils::get_color_scheme()['primary']['color'];
+  $default_color = ThemeUtils::get_color_palette()['primary']['color'];
   $theme_color = get_theme_mod('text_color', $default_color);
   echo "<meta name=\"theme-color\" content=\"" . esc_attr($theme_color) . "\" />\n";
 }
@@ -195,7 +212,6 @@ add_action('wp_head', 'gioia_theme_color_meta', 20);
  * @return void
  */
 function gioia_favicon_link() {
-  // TODO: how to set options
   $default_icon = get_site_icon_url();
   $favicon_path = ABSPATH . '/favicon.ico';
   if (!empty($default_icon) && file_exists($favicon_path)) {
@@ -423,6 +439,11 @@ function gioia_countries() {
 }
 
 /**
+ * Load customizer additions.
+ */
+require get_template_directory() . '/inc/customizer.php';
+
+/**
  * Load custom post types and taxonomies.
  */
 require get_template_directory() . '/inc/custom-types.php';
@@ -454,5 +475,5 @@ if (class_exists('WPCF7')) {
  */
 if (class_exists('ACF')) {
   require get_template_directory() . '/inc/custom-acf.php';
-  require get_template_directory() . '/inc/theme-blocks.php';
 }
+require get_template_directory() . '/inc/theme-blocks.php';

@@ -20,7 +20,7 @@ function gioia_cf7_form_elements($form_elements) {
   if (strpos($form_elements, 'wpcf7-submit') !== false) {
     $form_elements = str_replace(
       'wpcf7-form-control has-spinner wpcf7-submit',
-      'wpcf7-submit has-spinner btn btn-primary',
+      'wpcf7-submit has-spinner wp-element-button',
       $form_elements
     );
   }
@@ -34,21 +34,21 @@ function gioia_cf7_form_elements($form_elements) {
   }
   return $form_elements;
 }
-add_filter('wpcf7_form_elements', 'gioia_cf7_form_elements', 10, 1);
+add_filter('wpcf7_form_elements', 'gioia_cf7_form_elements', 99, 1);
 
 /**
  * Create CF7 dynamic dataset for some fields (country, post type etc).
  *
  * @return void
  */
-function gioia_cf7_dynamic_data($n, $options, $args) {
+function gioia_cf7_dynamic_data($n, $options) {
   if (in_array('countries', $options) && function_exists('gioia_countries')) {
     $countries = gioia_countries();
     return $countries;
   }
   return null;
 }
-add_filter('wpcf7_form_tag_data_option', 'gioia_cf7_dynamic_data', 10, 3);
+add_filter('wpcf7_form_tag_data_option', 'gioia_cf7_dynamic_data', 99, 2);
 
 /**
  * Handle CF7 invalid state(s) and redirect on submit.
@@ -56,7 +56,7 @@ add_filter('wpcf7_form_tag_data_option', 'gioia_cf7_dynamic_data', 10, 3);
  * @return void
  */
 function gioia_cf7_submit_handler() {
-  // NOTE: get the correct page ID and replace 4441
+  // TODO: get the correct page ID and replace 4441
   $thank_you_page_id = function_exists('pll_get_post') ? pll_get_post(4441) : 4441;
 ?>
   <script type="text/javascript">

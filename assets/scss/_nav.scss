@@ -1,0 +1,50 @@
+/* ! Nav: global */
+[class*="navmenu"] {
+  @include list-reset;
+  > li {
+    &.menu-item-has-children {
+      position: relative;
+    }
+  }
+  & > li:is(:hover, .open) .navmenu__caret {
+    transform: rotate(-180deg);
+  }
+}
+.navmenu__sub {
+  @media (max-width: 767px) {
+    display: none;
+  }
+  @media (min-width: 768px) {
+    opacity: 0;
+    visibility: hidden;
+    width: max(100%, 150px);
+    position: absolute;
+    top: 100%;
+    z-index: 10;
+    background: $white-color;
+    transition: visibility 25ms ease 125ms, opacity 125ms ease;
+    ul[class*="navmenu"] > li:hover > & {
+      opacity: 1;
+      visibility: visible;
+      transition: visibility 25ms ease, opacity 125ms ease 25ms;
+    }
+  }
+  @media (max-width: 767px) {
+    display: none;
+    visibility: hidden;
+    ul[class*="navmenu"] > li.open > & {
+      display: block;
+      visibility: visible;
+    }
+  }
+}
+.navmenu__caret {
+  line-height: 1;
+  margin-left: 0.5rem;
+  display: inline-block;
+  vertical-align: baseline;
+  .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+}

@@ -17,11 +17,7 @@ if (!function_exists('gioia_theme_breadcrumb')) {
     $separator = isset($yoast_options['breadcrumbs-sep']) ? $yoast_options['breadcrumbs-sep'] : '&#155;';
     return "</li>&nbsp;$separator<li class=\"breadcrumb__item\">";
   }
-  add_filter('wpseo_breadcrumb_separator', 'gioia_yoast_breadcrumb_items', 10);
-  function gioia_yoast_breadcrumb_separator() {
-    return '</li><li>';
-  }
-  add_filter('wpseo_breadcrumb_separator', 'gioia_yoast_breadcrumb_separator', 10);
+  add_filter('wpseo_breadcrumb_separator', 'gioia_yoast_breadcrumb_items', 11);
 }
 
 /**

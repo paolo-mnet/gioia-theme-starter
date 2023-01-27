@@ -20,7 +20,7 @@
 					($controlToClose = $panelToClose.find('[aria-controls]')),
 					(panelToCloseId = $controlToClose.attr('aria-controls'));
 				$controlToClose.attr('aria-expanded', 'false');
-				$controlToClose.find('.icon').replaceWith(gioia_icons.plus);
+				$controlToClose.find('.icon').replaceWith(gioia_icons.plus.svg);
 				$('#' + panelToCloseId).attr('aria-hidden', 'true');
 				$('#' + panelToCloseId)
 					.stop(true)
@@ -32,7 +32,7 @@
 			// update expanded status
 			isExpanded = $control.attr('aria-expanded') == 'true';
 			$control.attr('aria-expanded', !isExpanded ? 'true' : 'false');
-			$control.find('.icon').replaceWith(!isExpanded ? gioia_icons.minus : gioia_icons.plus);
+			$control.find('.icon').replaceWith(!isExpanded ? gioia_icons.minus.svg : gioia_icons.plus.svg);
 
 			// update shown/hidden status
 			isHidden = $('#' + panelId).attr('aria-hidden') == 'true';

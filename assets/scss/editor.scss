@@ -1,3 +1,7 @@
+@use 'sass:map';
+@import 'utils';
+@import 'base';
+
 /* ! Editor */
 .wp-block .icon {
   fill: currentColor;
@@ -6,26 +10,28 @@
 }
 .editor-post-title.editor-post-title__input {
   opacity: 0.7;
+  line-height: 1.15;
   text-align: center;
   font-weight: 400;
   font-family: sans-serif;
+  font-size: var(--wp--preset--font-size--huge);
   color: var(--wp-admin-theme-color);
-}
-.editor-post-title.editor-post-title__input:focus {
-  opacity: 1;
+  &:focus {
+    opacity: 1;
+  }
 }
 
 /* ! Miscellaneous */
-.acf-block-preview__notice {
+.acf-block-preview-notice {
   opacity: 0.4;
+  color: $text-color;
   margin: 0 !important;
   padding: 20px 0 !important;
-  font-size: 17px !important;
+  font-size: 18px !important;
   text-align: center !important;
-  color: var(--wp--preset--color--black);
 }
-[data-type^="acf/"] .acf-block-preview a.btn,
 [data-type^="acf/"] .acf-block-preview input,
-[data-type^="acf/"] .acf-block-preview [type="submit"] {
+[data-type^="acf/"] .acf-block-preview button,
+[data-type^="acf/"] .acf-block-preview a[role="button"] {
   pointer-events: none;
 }

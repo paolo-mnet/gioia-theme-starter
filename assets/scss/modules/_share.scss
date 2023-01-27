@@ -1,0 +1,64 @@
+/* ! Share */
+.entry-share {
+  text-align: right;
+  position: relative;
+  z-index: 100;
+  &__wrap {
+    opacity: 0;
+    margin-top: 0.5rem;
+    padding: 0.7rem 1rem;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    left: inherit;
+    width: auto;
+    min-width: 250px;
+    visibility: hidden;
+    transform: translateY(12px);
+    border-radius: $button-radius;
+    background-color: $white-color;
+    box-shadow: 0px 0px 12px 6px rgba(0, 0, 0, 0.075);
+    transition: opacity 0.2s ease-in, transform 0.2s ease-in, visibility 0.05s ease 0.2s;
+  }
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -6px;
+    right: 6px;
+    width: 0px;
+    height: 0px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 6px solid $white-color;
+  }
+  &--open &__wrap {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0px);
+    transition: opacity 0.2s ease-out 0.05s, transform 0.2s ease-out 0.05s, visibility 0.05s ease 0s;
+  }
+  &__btn {
+    @include flex-row(center, center, 0);
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    touch-action: manipulation;
+    background-color: $white-color;
+    &,
+    &:hover,
+    &:focus {
+      color: $text-color;
+    }
+    .icon {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}

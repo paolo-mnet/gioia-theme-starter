@@ -2,20 +2,102 @@
 wp.blocks.registerBlockVariation('core/heading', {
 	icon: 'editor-bold',
 	name: 'core/strong-heading',
-	title: wp.i18n._x('Strong title', 'Block Editor', 'energica'),
+	title: wp.i18n._x('Strong title', 'Block Editor', 'gioia'),
 	attributes: {
-		className: 'strong-title text-uppercase',
+		className: 'strong-title',
 	},
 });
 wp.blocks.registerBlockVariation('core/list', {
 	icon: 'menu-alt',
 	name: 'core/unordered-list',
-	title: wp.i18n._x('Unordered list', 'Block Editor', 'energica'),
-	description: wp.i18n._x('Create unordered list.', 'Block Editor', 'energica'),
+	title: wp.i18n._x('Unordered list', 'Block Editor', 'gioia'),
+	description: wp.i18n._x('Create unordered list.', 'Block Editor', 'gioia'),
 	attributes: {
 		className: 'list-unstyled',
 	},
 });
+
+// Handle block(s) settings.
+function coreBlocksAttributesHandler(settings, name) {
+	if (name === 'core/button') {
+		settings.attributes = Object.assign(settings.attributes, {
+			icon: {
+				type: 'string',
+				default: '',
+			},
+			icon_pos: {
+				type: 'string',
+				default: 'left',
+			},
+		});
+	}
+	return settings;
+}
+wp.hooks.addFilter('blocks.registerBlockType', 'gioia/core-blocks/attributes', coreBlocksAttributesHandler);
+
+/**
+ * Create HOC to add icon SelectControl to inspector controls of the button block.
+ */
+var el = wp.element.createElement;
+var Fragment = wp.element.Fragment;
+var withIconControl = wp.compose.createHigherOrderComponent(function (BlockEdit) {
+	return function (props) {
+		if (props.hasOwnProperty('name') && props.name === 'core/button') {
+			var icon = props.attributes.icon || '';
+			var iconPos = props.attributes.icon_pos || '';
+			function onIconChange(val) {
+				props.setAttributes({ icon: val });
+			}
+			function onIconPositionChange(val) {
+				props.setAttributes({ icon_pos: val });
+			}
+			var iconOptions = [{ label: '---', value: '' }];
+			if (typeof gioia_icons !== 'undefined') {
+				Object.keys(gioia_icons).forEach(function (name) {
+					iconOptions.push({ label: gioia_icons[name].label, value: name });
+				});
+			}
+			return el(
+				Fragment,
+				{},
+				el(BlockEdit, props),
+				el(
+					wp.blockEditor.InspectorControls,
+					{},
+					el(
+						wp.components.PanelBody,
+						{ title: wp.i18n._x('Additional settings', 'Block Editor', 'gioia'), initialOpen: false },
+						el(wp.components.SelectControl, {
+							label: wp.i18n._x('Icon', 'Block Editor', 'gioia'),
+							options: iconOptions,
+							onChange: onIconChange,
+							value: icon,
+						}),
+						icon
+							? el(wp.components.SelectControl, {
+									label: wp.i18n._x('Position', 'Block Editor', 'gioia'),
+									options: [
+										{
+											label: wp.i18n._x('Left', 'Block Editor', 'gioia'),
+											value: 'left',
+										},
+										{
+											label: wp.i18n._x('Right', 'Block Editor', 'gioia'),
+											value: 'right',
+										},
+									],
+									onChange: onIconPositionChange,
+									value: iconPos,
+							  })
+							: ''
+					)
+				)
+			);
+		}
+		return el(BlockEdit, props);
+	};
+}, 'withIconControl');
+wp.hooks.addFilter('editor.BlockEdit', 'gioia/core-blocks/button', withIconControl, 110);
 
 /**
  * Handle Block Editor unregistration (blocks or styles).

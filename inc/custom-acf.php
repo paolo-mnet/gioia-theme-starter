@@ -95,7 +95,7 @@ function gioia_acf_admin_head() {
 add_action('acf/input/admin_head', 'gioia_acf_admin_head');
 
 function gioia_acf_admin_footer() {
-  $theme_palettes = wp_list_pluck(ThemeUtils::get_color_scheme(), 'color');
+  $theme_palettes = wp_list_pluck(ThemeUtils::get_color_palette(), 'color');
 ?>
   <script type="text/javascript">
     (function($) {

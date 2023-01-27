@@ -1,0 +1,39 @@
+/* ! Layout */
+.container {
+  width: 100%;
+  @include container;
+  & > .alignwide,
+  & > .alignfull {
+    @include inner-container;
+  }
+  @each $name,
+  $value in $breakpoints {
+    $mw: map.get($containers, $name);
+    @media (min-width: $value) {
+      @if $name ==xxl {
+        & > .alignwide {
+          max-width: min(calc(100vw - var(--scrollbar-width)), $mw);
+          margin-left: calc(max(calc(-50vw + (var(--scrollbar-width)) / 2), (($mw/2) * -1)) + 50%);
+        }
+      }
+      @else {
+        & > .alignwide {
+          max-width: $mw;
+          margin-left: calc((($mw/2) * -1) + 50%);
+        }
+      }
+    }
+  }
+}
+.alignfull,
+.alignwide {
+  padding-inline: $gutter;
+  & :is(.alignfull, .alignwide) {
+    padding-inline: 0;
+  }
+}
+.alignfull {
+  & > & {
+    margin-inline: calc($gutter * -1);
+  }
+}
